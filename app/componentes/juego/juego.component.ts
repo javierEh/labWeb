@@ -16,11 +16,22 @@ export class JuegoComponent implements OnInit {
   constructor(private activatedRoute:ActivatedRoute,
               private consolasService:ConsolasService) {
     this.activatedRoute.params.subscribe(params => {
+
+
       console.log(params['idConsola']);
       console.log(params['idJuego']);
+
       this.idConsola = params['idConsola'];
       this.idJuego = params['idJuego'];
-      this.juego = this.consolasService.obtieneJuego(this.idConsola, this.idJuego);      
+
+      this.juego = new Promise( (resolve, reject) => {
+        this.consolasService.getJuego(this.idJuego).subscribe(
+          juego => { console.log(juego); resolve(juego)
+          } )
+        })
+      
+
+
     })
   }
 
