@@ -12,6 +12,8 @@ export class JuegosconsolaComponent implements OnInit {
   juegos:any = [];
   idConsola:string;
 
+
+
   constructor( private consolasService:ConsolasService,
                private activatedRoute:ActivatedRoute) {
      this.activatedRoute.params.subscribe(params => {
@@ -21,7 +23,13 @@ export class JuegosconsolaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.juegos = this.consolasService.obtieneJuegosConsola(this.idConsola);
+    this.juegos = new Promise( (resolve, reject) => {
+      this.consolasService.getJuegoConsola(this.idConsola).subscribe(
+        juegos => { this.juegos = juegos[0].juegos; resolve(juegos)
+        } )
+      })
+
+
   }
 
 }

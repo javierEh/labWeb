@@ -9,10 +9,10 @@ import { ConsolasService } from "../../servicios/consolas.service";
 export class ConsolasComponent implements OnInit {
 
   //Vamos a utilizer el pipe async que solo puede recibir un Observable o un Promise
-  consolasAsincrono:any;
+  consolas:any;
 
   constructor(public consolasService : ConsolasService) {
-  this.consolasAsincrono = new Promise( (resolve, reject) => {
+  this.consolas = new Promise( (resolve, reject) => {
     this.consolasService.getConsolas().subscribe(
       consolas => { console.log(consolas); resolve(consolas)
       } )
