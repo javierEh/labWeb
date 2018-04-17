@@ -13,7 +13,7 @@ export class ResconsolasComponent implements OnInit {
 
   constructor(private activatedRoute:ActivatedRoute, private ConsolasService:ConsolasService) { }
 
-  alumnosAsincrono:any;
+  consolasAsincrono:any;
 
 
 
@@ -22,7 +22,7 @@ export class ResconsolasComponent implements OnInit {
       console.log(params['palabrasBusqueda']);
       this.palabrasBusqueda = params['palabrasBusqueda'];
 
-      this.alumnosAsincrono = new Promise( (resolve, reject) => {
+      this.consolasAsincrono = new Promise( (resolve, reject) => {
         this.ConsolasService.getConsolasWithName(this.palabrasBusqueda).subscribe(
           consolas => { console.log(consolas); resolve(consolas)
           } )
