@@ -1,0 +1,36 @@
+<hr>
+  {{ formulario.valid }}
+<hr>
+<form [formGroup]="formulario" (ngSubmit)="guardar()">
+  <div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+        <!--Para que el campo nombre sea requerido-->
+        <input class="form-control" [ngClass]="{ 'is-invalid': !formulario.get('nombre').valid}" type="text" placeholder="Nombre" formControlName="nombre">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Entrada</label>
+      <div class="col-8">
+        <textarea class="form-control" [ngClass]="{ 'is-invalid': !formulario.get('entrada').valid}" rows="5" formControlName="entrada">
+        </textarea>
+      </div>
+    </div>
+
+  </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div *ngIf="formulario.valid" class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary"> Publicar </button>
+    </div>
+  </div>
+  </form>
+
+  <div *ngFor="let entrada of entradas;">
+    <h1>{{entrada.nombre}}</h1>
+    <h2>{{entrada.fecha | date:'short'}}</h2>
+    <p>{{entrada.entrada}}</p>
+  </div>
+<hr>
