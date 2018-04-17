@@ -11,6 +11,7 @@ import { InfoconsolaComponent } from './componentes/infoconsola/infoconsola.comp
 import { JuegosconsolaComponent } from './componentes/juegosconsola/juegosconsola.component';
 import { JuegoComponent } from './componentes/juego/juego.component';
 import { ConsolasService } from './servicios/consolas.service';
+import { HttpClientModule } from '@angular/common/http';
 import { ResconsolasComponent } from './componentes/buscador/resconsolas/resconsolas.component';
 import { ResjuegosComponent } from './componentes/buscador/resjuegos/resjuegos.component';
 import { BlogComponent } from './componentes/blog/blog.component';
@@ -35,7 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    APP_ROUTING
+    APP_ROUTING,
+    HttpClientModule
   ],
   providers: [
     ConsolasService
