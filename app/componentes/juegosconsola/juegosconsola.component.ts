@@ -26,7 +26,7 @@ export class JuegosconsolaComponent implements OnInit {
     new Promise( (resolve, reject) => {
       this.consolasService.getJuegoConsola(this.idConsola).subscribe(
         juegos => { this.juegos = juegos[0].juegos; console.log(this.juegos); resolve(juegos)
-        } )
+        })
       })
 
 

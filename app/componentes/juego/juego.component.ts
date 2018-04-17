@@ -9,7 +9,7 @@ import { ConsolasService, Consola } from '../../servicios/consolas.service';
 })
 export class JuegoComponent implements OnInit {
 
-  juego:any;
+  juego:any = {};
   idConsola:string;
   idJuego:string;
 
@@ -24,18 +24,23 @@ export class JuegoComponent implements OnInit {
       this.idConsola = params['idConsola'];
       this.idJuego = params['idJuego'];
 
-      this.juego = new Promise( (resolve, reject) => {
-        this.consolasService.getJuego(this.idJuego).subscribe(
-          juego => { console.log(juego); resolve(juego)
-          } )
-        })
-      
+      new Promise( (resolve, reject) => {
+          this.consolasService.getJuego(this.idJuego).subscribe(
+            juego => { this.juego = juego; console.log(this.juego); resolve(juego)
+            } )
+          })
+
+
 
 
     })
   }
 
   ngOnInit() {
+
   }
+
+
+
 
 }
