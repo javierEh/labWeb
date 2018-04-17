@@ -18,11 +18,14 @@ export class InfoconsolaComponent implements OnInit {
       console.log(params['id']);
       this.idConsola = params['id'];
       this.consola = new Promise( (resolve, reject) => {
-        this.consolasService.getConsola(this.idConsola).subscribe(
-          consolas => { console.log(consolas); resolve(consolas)
+      this.consolasService.getConsola(this.idConsola).subscribe(
+          consola => { this.consola=consola[0]; resolve(consola)
           } )
         })
+      this.consola = this.consola;
+      console.log(this.consola)
     })
+
   }
 
   ngOnInit() {
