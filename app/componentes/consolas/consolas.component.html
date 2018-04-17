@@ -9,7 +9,7 @@
       <!-- Utilizamos '/infoconsola' en lugar de 'infoconsola' para evitar que en el
             archivo 'app.routes.ts' se tenga que declarar como 'consolas/infoconsola/:id' de
             tal forma que la URL quedaría como http://localhost:4200/infoconsola/0 -->
-      <a [routerLink]="['/infoconsola',i]" class="btn btn-primary">Información</a>
+      <a [routerLink]="['/infoconsola',consola.nombre]" class="btn btn-primary">Información</a>
     </div>
   </div>
 </div>
