@@ -13,11 +13,21 @@ export class ResconsolasComponent implements OnInit {
 
   constructor(private activatedRoute:ActivatedRoute, private ConsolasService:ConsolasService) { }
 
+  alumnosAsincrono:any;
+
+
+
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       console.log(params['palabrasBusqueda']);
       this.palabrasBusqueda = params['palabrasBusqueda'];
-      this.consolas = this.ConsolasService.buscarConsolas(this.palabrasBusqueda);
+
+      this.alumnosAsincrono = new Promise( (resolve, reject) => {
+        this.ConsolasService.getConsolasWithName(this.palabrasBusqueda).subscribe(
+          consolas => { console.log(consolas); resolve(consolas)
+          } )
+        })
+
       console.log(this.consolas);
     })
   }

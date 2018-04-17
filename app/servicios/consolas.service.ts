@@ -16,6 +16,11 @@ export class ConsolasService {
      return this.httpClient.get(servicioRest);
   }
 
+  getConsolasWithName(palabras:String){
+    let servicioRest = 'http://localhost:8585/videojuegos/busqueda/' + palabras;
+     return this.httpClient.get(servicioRest);
+  }
+
    private consolas:Consola[] = [];
   //   {
   //     nombre: "PC Master Race",
