@@ -29,11 +29,10 @@ module.exports = function(app) {
  app.route('/consolas')
  .get(studentCollection.getConsolas);
 
- app.route('/juegos/:idjuego')
- .get(studentCollection.infoJuego);
+ app.route('/juegos/:idjuego').
+ get(studentCollection.infoJuego);
 
- app.route('/juegosNombre/:juego')
- .get(studentCollection.infoJuegoPorNombre);
-
+ app.route('/videojuegos/busqueda/juegos/:palabraClaveJuego')
+ .get(studentCollection.buscar_palabra_clave_juegos);
 
 };
