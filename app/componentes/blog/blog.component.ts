@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ConsolasService } from "../../servicios/consolas.service";
 
 @Component({
   selector: 'app-blog',
@@ -12,7 +13,7 @@ export class BlogComponent implements OnInit {
   formulario:FormGroup;
   entradas:any[];
 
-  constructor() {
+  constructor(public consolasService : ConsolasService) {
     this.entradas = [];
     this.formulario = new FormGroup({
       'nombre': new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -23,16 +24,11 @@ export class BlogComponent implements OnInit {
   ngOnInit() {
   }
 
-  guardar(){
-
-    let nuevaEntrada={} as Entrada;
-    nuevaEntrada.nombre = this.formulario.value.nombre;
-    nuevaEntrada.entrada = this.formulario.value.entrada;
-    nuevaEntrada.fecha = new Date();
-    this.entradas.push(nuevaEntrada);
-    console.log(this.formulario.value);
-  }
-
+guardar(){
+  console.log(this.formulario.value);
+  new Promise( (resolve, reject) => {
+  this.consolasService.addEntry(this.formulario.value).subscribe( consolas => {
+  resolve() } ) }) }
 }
 
 export interface Entrada{

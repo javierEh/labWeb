@@ -56,6 +56,10 @@ export class ConsolasService {
     return this.httpClient.post(servicioRest, consola, {responseType: 'text'});
   }
 
+  addEntry(entrada: any){
+    let servicioRest = 'http://localhost:8585/blog';
+    return this.httpClient.post(servicioRest, entrada, {responseType: 'text'});
+  }
 
    private consolas:Consola[] = [];
   //   {
