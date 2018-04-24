@@ -42,7 +42,8 @@ export class ConsolasService {
   }
 
   getJuego(id:String){
-    let servicioRest = 'http://localhost:8585/juegos/'+id;
+    let servicioRest = 'http://localhost:8585/videojuegos/info/'+id;
+    console.log("Consumiendo ws de: " + servicioRest);
     return this.httpClient.get(servicioRest);
   }
 
