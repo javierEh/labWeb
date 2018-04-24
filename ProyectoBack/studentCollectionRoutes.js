@@ -29,9 +29,6 @@ module.exports = function(app) {
  app.route('/consolas')
  .get(studentCollection.getConsolas);
 
- app.route('/juegos/:idjuego')
- .get(studentCollection.infoJuego);
-
  app.route('/consolas')
  .post(studentCollection.agregar_consola);
 
