@@ -150,39 +150,91 @@ exports.agregar_consola = function(req, res) {
 
 
 exports.buscar_palabra_clave_juegos = function(req, res) {
+  var consolasArreglo = [];
+  //console.log("aqui llegue");
   MongoClient.connect(url, function(err, mdbclient) {
-  if (err){
-    throw err;
-   }
-   const db = mdbclient.db(dbName);
-
-   var palabraClaveJuego = req.params.palabraClaveJuego;
-
-   db.collection("consolas").findOne({"juegos.nombre":new RegExp(palabraClaveJuego,'i')}, {fields:{_id:0, juegos:1}}, function(err, result) {
-
-     if (err){
+    if (err){
       throw err;
-     }
+    }
+    const db = mdbclient.db(dbName);
 
-     mdbclient.close();
+    //Regresar todas las consolas
+    db.collection("consolas").find().project().toArray(function(err, result) {
+      if (err){
+        throw err;
+      }
+      //console.log("Consola encontrada: " + consolaRecibida);
+      consolasArreglo = result;
+      mdbclient.close();
 
-    var resultFinal = [];
-     //Regresamos solamente el juego que corresponde al nombre.
-     if(result){
-       for (var i = 0; i < result.juegos.length; i++){
-         //Si encontramos el juego que corresponde a la clave, regresamos solo ese elemento.
-         if (result.juegos[i].nombre == palabraClaveJuego){
-             //console.log(result.juegos[i].nombre);
-             console.log("Consulta ejecutada...");
-             resultFinal.push(result.juegos[i]);
+      //console.log(consolasArreglo);
+      var resultFinal = [];
+      var tam = consolasArreglo.length;
 
-         }
-       }
-       mdbclient.close();
-       res.end( JSON.stringify(resultFinal));
-     }else{
-        res.end(null);
-     }
+      var i = 0;
+      function step() {
+        //console.log("primero con: " + i);
+
+        if (i < consolasArreglo.length) {
+        MongoClient.connect(url, function(err, mdbclient){
+          var miConsola = consolasArreglo[i];
+
+          //console.log("Segundo con: " + i);
+          if (err){
+            throw err;
+          }
+          const db = mdbclient.db(dbName);
+          var palabraClaveJuego = req.params.palabraClaveJuego;
+
+          db.collection("consolas").find({"nombre":miConsola.nombre}).project({_id:0, "juegos.nombre":1,"juegos.portada":1}).toArray(function(err, result) {
+
+           if (err){
+            throw err;
+           }
+
+           //console.log("El result: " + JSON.stringify(result));
+           if(result[0]){
+             for (var j = 0; j < result[0].juegos.length; j++){
+               //Si encontramos el juego que corresponde a la clave, regresamos solo ese elemento.
+              if((new RegExp(palabraClaveJuego,'i')).test(result[0].juegos[j].nombre)){
+                resultFinal.push(result[0].juegos[j]);
+              }
+
+
+
+             }
+             mdbclient.close();
+
+           }else{
+              res.end(null);
+           }
+
+           mdbclient.close();
+
+           functionAfterForEach(resultFinal);
+           i++;
+           step();
+
+           //Regresamos solamente el juego que corresponde al nombre.
+
+        });
+        });
+
+        }
+      }
+      step();
+
+      function functionAfterForEach(resultFinal){
+        tam--;
+        //console.log("el tam es" + tam + " y el arr es: " + resultFinal);
+        if(tam == 0){
+          console.log(resultFinal);
+          res.end(JSON.stringify(resultFinal));
+        }
+      }
+    });
   });
-  });
+
+
+
 }
