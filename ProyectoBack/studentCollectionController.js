@@ -74,7 +74,7 @@ exports.obtenerJuegos = function(req, res) {
     const db = mdbclient.db(dbName);
 
     var consolaRecibida = req.params.consola;
-    db.collection("consolas").find({nombre:consolaRecibida}).project({ _id:0, "juegos.nombre": 1, "juegos.portada": 1 }).toArray(function(err, result) {
+    db.collection("consolas").find({nombre:consolaRecibida}).project({ "juegos._id":1, "juegos.nombre": 1, "juegos.portada": 1 }).toArray(function(err, result) {
       if (err){
         throw err;
       }
@@ -91,20 +91,28 @@ exports.infoJuego = function(req, res) {
     if (err){
       throw err;
     }
-
     const db = mdbclient.db(dbName);
-
     var juegoRecibido = req.params.juego;
-    console.log(juegoRecibido);
+    console.log("El juego recibido es: " + juegoRecibido);
 
-    db.collection("consolas").findOne({juegos:{nombre:juegoRecibido}}, {fields:{_id:0, "juegos.developer":1}}, function(err, result) {
+    db.collection("consolas").findOne({"juegos._id":juegoRecibido}, {fields:{"juegos._id":1,"juegos.portada":1,"juegos.nombre":1, "juegos.developer":1,"juegos.lanzamiento":1}}, function(err, result) {
       if (err){
         throw err;
       }
+      var finalresult = {};
+      console.log("El result de mongo es:")
+      console.log(result.juegos);
+      for (var juego in result.juegos) {
+        console.log(juego);
+        if (result.juegos[juego]._id == juegoRecibido){
+          finalresult = result.juegos[juego];
+        }
+      }
+
       console.log("Consulta ejecutada...");
       mdbclient.close();
 
-      res.end( JSON.stringify(result));
+      res.end( JSON.stringify(finalresult));
     });
   });
 };
@@ -186,18 +194,20 @@ exports.buscar_palabra_clave_juegos = function(req, res) {
           const db = mdbclient.db(dbName);
           var palabraClaveJuego = req.params.palabraClaveJuego;
 
-          db.collection("consolas").find({"nombre":miConsola.nombre}).project({_id:0, "juegos.nombre":1,"juegos.portada":1}).toArray(function(err, result) {
+          db.collection("consolas").find({"nombre":miConsola.nombre}).project({"juegos._id":1, "juegos.nombre":1,"juegos.portada":1,"nombre":1}).toArray(function(err, result) {
 
            if (err){
             throw err;
            }
 
-           //console.log("El result: " + JSON.stringify(result));
+           console.log("El result: " + JSON.stringify(result));
            if(result[0]){
              for (var j = 0; j < result[0].juegos.length; j++){
                //Si encontramos el juego que corresponde a la clave, regresamos solo ese elemento.
               if((new RegExp(palabraClaveJuego,'i')).test(result[0].juegos[j].nombre)){
-                resultFinal.push(result[0].juegos[j]);
+                var newObj = result[0].juegos[j];
+                newObj["nombreConsola"] = result[0].nombre;
+                resultFinal.push(newObj);
               }
 
 
