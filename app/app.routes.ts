@@ -10,6 +10,7 @@ import { JuegoComponent } from './componentes/juego/juego.component';
 import { ResconsolasComponent } from './componentes/buscador/resconsolas/resconsolas.component';
 import { ResjuegosComponent } from './componentes/buscador/resjuegos/resjuegos.component';
 import { BlogComponent } from './componentes/blog/blog.component';
+import { NuevaComponent } from './componentes/nueva/nueva.component';
 
 
 
@@ -20,6 +21,8 @@ const APP_ROUTES: Routes = [
   { path: 'acercade', component: AcercadeComponent },
   { path: 'consolas', component: ConsolasComponent },
   { path: 'blog', component: BlogComponent },
+  { path: 'nueva', component: NuevaComponent },
+
 
   //{ path: 'consolas/infoconsola/id', component: InfoconsolaComponent }, cambia por:
   { path: 'infoconsola/:id', component: InfoconsolaComponent },

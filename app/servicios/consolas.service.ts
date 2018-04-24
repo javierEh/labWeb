@@ -46,6 +46,17 @@ export class ConsolasService {
     return this.httpClient.get(servicioRest);
   }
 
+  getJuegoBusqueda(juegoBuscar:String){
+    let servicioRest = 'http://localhost:8585/videojuegos/busqueda/juegos/'+juegoBuscar;
+    return this.httpClient.get(servicioRest);
+  }
+
+  addConsola(consola: any){
+    let servicioRest = 'http://localhost:8585/consolas';
+    return this.httpClient.post(servicioRest, consola, {responseType: 'text'});
+  }
+
+
    private consolas:Consola[] = [];
   //   {
   //     nombre: "PC Master Race",

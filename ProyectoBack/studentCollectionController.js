@@ -129,6 +129,26 @@ exports.obtenerBlogs = function(req, res) {
   });
 };
 
+exports.agregar_consola = function(req, res) {
+  console.log("WAHTUP")
+  MongoClient.connect(url, function(err, mdbclient) {
+    if (err){
+      throw err;
+    }
+    const db = mdbclient.db(dbName);
+    var nuevaConsola = req.body;
+    db.collection("consolas").insertOne(nuevaConsola, function(err, res) {
+      if (err){
+        throw err;
+      }
+      console.log("Insert ejecutado...");
+      mdbclient.close();
+    });
+    res.end();
+  });
+};
+
+
 exports.buscar_palabra_clave_juegos = function(req, res) {
   MongoClient.connect(url, function(err, mdbclient) {
   if (err){

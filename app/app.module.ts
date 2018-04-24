@@ -17,6 +17,7 @@ import { ResjuegosComponent } from './componentes/buscador/resjuegos/resjuegos.c
 import { BlogComponent } from './componentes/blog/blog.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NuevaComponent } from './componentes/nueva/nueva.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     JuegoComponent,
     ResconsolasComponent,
     ResjuegosComponent,
-    BlogComponent
+    BlogComponent,
+    NuevaComponent
   ],
   imports: [
     BrowserModule,
