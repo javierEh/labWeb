@@ -156,15 +156,16 @@ exports.agregar_consola = function(req, res) {
   });
 };
 
+
 exports.agregar_entrada = function(req, res) {
-  console.log("WAHTUP")
+  console.log("blog done!")
   MongoClient.connect(url, function(err, mdbclient) {
     if (err){
       throw err;
     }
     const db = mdbclient.db(dbName);
     var nuevaEntrada = req.body;
-    db.collection("consolas").insertOne(nuevaEntrada, function(err, res) {
+    db.collection("blog").insertOne(nuevaEntrada, function(err, res) {
       if (err){
         throw err;
       }

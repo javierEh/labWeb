@@ -32,6 +32,9 @@ module.exports = function(app) {
  app.route('/consolas')
  .post(studentCollection.agregar_consola);
 
+ app.route('/blog')
+ .post(studentCollection.agregar_entrada);
+
  app.route('/videojuegos/busqueda/juegos/:palabraClaveJuego')
  .get(studentCollection.buscar_palabra_clave_juegos);
 
