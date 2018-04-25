@@ -74,7 +74,10 @@ export class NuevaComponent implements OnInit {
 
     new Promise( (resolve, reject) => { this.ConsolasService.addConsola(this.formulario.value).subscribe(
       consolas => {
-        resolve()
+        resolve();
+        if(confirm('Consola guardada')){
+          window.location.href = "/";
+        }
       } )
     })
   }

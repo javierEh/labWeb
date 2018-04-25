@@ -28,7 +28,12 @@ guardar(){
   console.log(this.formulario.value);
   new Promise( (resolve, reject) => {
   this.consolasService.addEntry(this.formulario.value).subscribe( consolas => {
-  resolve() } ) }) }
+
+  resolve();
+  if(confirm('Blog guardado')){
+          window.location.href = "/";
+        }
+  } ) }) }
 }
 
 export interface Entrada{
